@@ -13,6 +13,7 @@ import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,6 +28,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         updateConnection()
+
+        calendarView.addDecorators(
+            SelectionDecorator(this)
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
