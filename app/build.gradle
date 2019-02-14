@@ -5,6 +5,14 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias System.getenv('ANDROID_JKS_KEY_ALIAS') ?: 'changeme'
+            keyPassword System.getenv('ANDROID_JKS_KEY_PASSWORD') ?: 'changeme'
+            storeFile file(System.getenv('ANDROID_JKS_STORE_FILE') ?: 'changeme')
+            storePassword System.getenv('ANDROID_JKS_STORE_PASSWORD') ?: 'changeme'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "fr.gabriello.ejypy"
@@ -18,6 +26,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 }

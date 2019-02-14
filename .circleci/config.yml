@@ -1,0 +1,39 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/code
+    docker:
+      - image: circleci/android:api-28-alpha
+    environment:
+      JVM_OPTS: -Xmx3200m
+    steps:
+      - checkout
+      - run:
+          name: Import Google Services credentials
+          command: echo $GOOGLE_SERVICES | base64 --decode > ./app/google-services.json
+      - run:
+          name: Import Android Keystore
+          command: echo $ANDROID_JKS | base64 --decode > ./android.jks
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Download Dependencies
+          command: ./gradlew androidDependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Run Tests
+          command: ./gradlew lint test
+      - store_artifacts:
+          path: app/build/reports
+          destination: reports
+      - store_test_results:
+          path: app/build/test-results
+      - run:
+          name: Build APKs
+          command: ANDROID_JKS_STORE_FILE="${HOME}/code/android.jks" ./gradlew assembleRelease
+      - store_artifacts:
+          path: app/build/outputs/apk/release
+          destination: apk
