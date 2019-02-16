@@ -1,13 +1,13 @@
 package fr.gabriello.ejypy
 
-import android.app.Activity
+import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 
-class SelectionDecorator(context: Activity) : DayViewDecorator {
+class SelectionDecorator(context: Context) : DayViewDecorator {
 
     private val mDrawable: Drawable = ContextCompat.getDrawable(context, R.drawable.selector_selected_range)!!
 
