@@ -29,6 +29,9 @@ android {
             signingConfig signingConfigs.config
         }
     }
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
 }
 
 dependencies {
@@ -43,6 +46,10 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.github.prolificinteractive:material-calendarview:2.0.1'
     testImplementation 'junit:junit:4.12'
+    testImplementation 'androidx.test:core:1.1.0'
+    testImplementation 'com.google.truth:truth:0.42'
+    testImplementation "org.robolectric:robolectric:4.2"
+    testImplementation 'org.mockito:mockito-inline:2.24.0'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
